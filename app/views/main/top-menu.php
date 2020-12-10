@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 ?>
 <!-- header.html start -->
 <div class="navbar navbar-default">
@@ -21,12 +22,15 @@
 			</li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
+            <?php if(!User::logged()):?>
 			<li>
 				<a href="/login">Войти</a>
 			</li>
+            <?php else:?>
 			<li>
 				<a href="/logout">Выйти</a>
 			</li>
+            <?php endif;?>
 		</ul>
 	</div>
 </div>

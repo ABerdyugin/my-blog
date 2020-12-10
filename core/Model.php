@@ -54,6 +54,22 @@ class Model
 	}
 
 	/**
+	 * @param string $model
+	 * @param string $where
+	 * @return false|array
+	 */
+	public function getRow($model, $where)
+	{
+		$query = "SELECT * FROM `{$model}` WHERE {$where}";
+		$sth = $this->link->query($query);
+
+		if ($sth) {
+			return $sth->fetch(PDO::FETCH_ASSOC);
+		}
+
+	}
+
+	/**
 	 * @param $model
 	 * @param string $where
 	 * @param string $limit

@@ -11,7 +11,7 @@ use core\View;
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <title><?= $params['site-title'] ?>Site Template - Main Page</title>
+    <title><?= $params['site-title'] ?></title>
 
     <!-- link.html start -->
     <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css"/>

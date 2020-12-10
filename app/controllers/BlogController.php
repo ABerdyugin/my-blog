@@ -22,8 +22,12 @@ class BlogController extends Controller
 	 * @var CommentController $comments
 	 */
 	private $comments;
+	/**
+	 * @var UserController $user
+	 */
+	private $user;
 
-	protected $title = "Blog Page";
+	protected $subTitle = "Блог";
 
 
 	public function __construct()
@@ -31,6 +35,8 @@ class BlogController extends Controller
 		$this->model = new Blog();
 		$this->view = new BlogView();
 		$this->comments = new CommentController();
+		$this->user = new UserController();
+		$this->title .= " - " . $this->subTitle;
 	}
 
 
@@ -38,6 +44,7 @@ class BlogController extends Controller
 	{
 
 		$data = array(
+			'site-title' => $this->title,
 			'page-header' => 'Блог'
 		);
 		$pageContent = "";
@@ -48,7 +55,7 @@ class BlogController extends Controller
 				'item-title' => $entry['title'],
 				'item-cut-content' => $entry['cutcontent'],
 				'item-created' => $this->formatCreated($entry['dateadd']),
-				'item-author' => $entry['user_id'], //TODO поменять на выборку имени автора поста
+				'item-author' => $this->user->getName($entry['user_id']),
 				'item-views' => $this->pluralViews($entry['views']),
 				'item-comments' => $this->pluralComments($this->comments->getCountForPost($entry['id'])),
 				'item-poster' => $entry['poster'],
@@ -65,9 +72,6 @@ class BlogController extends Controller
 	 */
 	public function actionShow($routes)
 	{
-		$data = array(
-			'page-header' => 'Блог'
-		);
 
 		$pageContent = "";
 		$id = array_shift($routes);
@@ -77,14 +81,19 @@ class BlogController extends Controller
 			'post-title' => $post['title'],
 			'post-cut-content' => $post['cutcontent'],
 			'post-content' => $post['content'],
-			'post-author' => $post['user_id'], //TODO поменять на выборку имени автора поста
+			'post-author' => $this->user->getName($post['user_id']),
 			'post-comments' => $this->pluralComments($this->comments->getCountForPost($post['id'])),
 			'post-views' => $this->pluralViews($post['views']),
 			'post-created' => $this->formatCreated($post['dateadd']),
 			'post-comment-list' => $this->getCommentList($post['id'])
 		);
 		$pageContent .= $this->view->buildPartial("item", $params);
-		$data['page-content'] = $pageContent;
+		$this->title .= " - " . $post['title'];
+		$data = array(
+			'site-title' => $this->title,
+			'page-header' => 'Блог',
+			'page-content' => $pageContent
+		);
 		$this->view->buildLayout(false, $data);
 	}
 
@@ -92,9 +101,9 @@ class BlogController extends Controller
 	{
 		$data = array();
 		$commentData = $this->comments->getCommentsByPost($postId);
-		foreach ($commentData as $comment){
+		foreach ($commentData as $comment) {
 			$data[] = array(
-				"comment-author" => $comment['user_id'], //TODO поменять на выборку имени автора комментария
+				"comment-author" => $this->user->getName($comment['user_id']),
 				"comment-content" => $comment['content']
 			);
 		}

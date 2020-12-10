@@ -21,6 +21,13 @@ class Route
 		if (!empty($routes[0])) {
 			$controllerName = array_shift($routes);
 		}
+		switch ($controllerName) {
+			case "login":
+			case "logout":
+			array_unshift($routes, $controllerName);
+			$controllerName = "user";
+				break;
+		}
 		$controllerClass = 'app\\controllers\\' . ucfirst($controllerName) . 'Controller';
 		if (!class_exists($controllerClass)) {
 			$controllerClass = 'app\\controllers\\' . Route::$CONTROLLER_NAME . 'Controller';
