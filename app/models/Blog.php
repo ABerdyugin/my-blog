@@ -8,11 +8,22 @@ use core\Model;
 
 class Blog extends Model
 {
-	protected $sort = '';
+    protected $modelName = "blog";
+    protected $sort = '';
 
-	public function getData($model, $where = '', $limit = ''): array
-	{
-		$this->sort = 'ORDER BY `dateadd` DESC';
-		return parent::getData($model, $where, $limit);
-	}
+    public function getData($model, $where = '', $limit = '')
+    {
+        $this->sort = 'ORDER BY `dateadd` DESC';
+        return parent::getData($model, $where, $limit);
+    }
+
+    /**
+     * @param integer $postId
+     * @return false|integer
+     */
+    public function getAuthor($postId)
+    {
+        $post = $this->getItem($this->modelName, $postId);
+        return $post !== false ? $post['user_id'] : false;
+    }
 }

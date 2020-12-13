@@ -8,12 +8,14 @@ use core\View;
 ?>
 <!-- содержимое страницы start -->
 <div class="panel panel-default">
-    <img class="img-responsive" src="/img/blog/<?= $params['post-poster'] ?>"/>
+    <?php if ($params['post-poster']): ?>
+        <img class="img-responsive" src="/img/<?= $params['post-poster'] ?>"/>
+    <?php endif; ?>
     <div class="panel-heading" style="font-size: 23px;"><?= $params['post-title'] ?></div>
     <div class="panel-body">
-			<?= $params['post-cut-content'] ?>
+        <?= $params['post-cut-content'] ?>
         <hr/>
-			<?= $params['post-content'] ?>
+        <?= $params['post-content'] ?>
         <script type="text/javascript">
             (function () {
                 if (window.pluso) if (typeof window.pluso.start == "function") return;
@@ -48,11 +50,11 @@ use core\View;
 </div>
 <div class="panel panel-default">
     <div class="panel-body">
-			<?php
-			foreach ($params['post-comment-list'] as $comment) {
-				View::chunk('comment.list-item', $comment);
-			}
-			?>
+        <?php
+        foreach ($params['post-comment-list'] as $comment) {
+            View::chunk('comment.list-item', $comment);
+        }
+        ?>
         <hr/>
         <form method="post">
             <div class="form-group">

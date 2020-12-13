@@ -5,7 +5,9 @@
 
 ?>
 <div class="panel panel-default">
-	<img class="img-responsive" src="/img/blog/<?= $params['item-poster']?>" />
+    <?php if (intval($params['item-poster']) >0): ?>
+        <img class="img-responsive" src="/img/<?= $params['item-poster'] ?>"/>
+    <?php endif; ?>
 	<div class="panel-heading" style="font-size: 23px;">
 		<a href="<?= $params['item-link'] ?>"><?= $params['item-title']?></a>
 	</div>

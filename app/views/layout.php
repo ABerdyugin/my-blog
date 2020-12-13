@@ -38,7 +38,7 @@ use core\View;
             </div>
             <div class="col-lg-4">
 							<?php
-                            View::chunk("main.right-menu");
+                            View::chunk("main.right-menu",$params);
 							?>
             </div>
         </div>
