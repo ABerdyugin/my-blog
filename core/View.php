@@ -9,7 +9,6 @@ class View
 	public function buildLayout($layout = false, $params = null)
 	{
 		include ROOT_PATH . "/app/views/" . ($layout != false ? $layout : $this->layoutName) . ".php";
-		//include "{ROOT_PATH}/app/views/{($layout != false ? $layout : $this->layoutName)}.php";
 
 	}
 

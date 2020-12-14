@@ -7,25 +7,38 @@ use app\controllers\BlogController as BC;
  */
 ?>
 <script src="/js/tinymce.min.js" referrerpolicy="origin"></script>
-<form action="/blog/add" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="act" value="insert">
+<form action="<?= $params['route'] ?>" method="post" enctype="multipart/form-data">
     <?php // TODO добавить CSRF проверку. но в текущей задаче этого не требуется  ?>
     <? ?>
     <div class="form-group">
         <label for="post-poster">Постер</label>
         <input type="file" name="post-poster" id="post-poster" class="form-control">
     </div>
+    <?php if ($params['action'] == 'insert'): ?>
+        <input type="hidden" name="act" value="insert">
+    <?php elseif ($params['action'] == "edit"): ?>
+        <input type="hidden" name="act" value="update">
+        <input type="hidden" name="post-id" value="<?= $params['post-id'] ?>">
+    <?php if($params['post-poster'] != ''):?>
+        <div class="form-group">
+            <label for="delete-poster">Удалить постер</label>
+            <input type="checkbox" name="delete-poster" id="delete-poster" value="1">
+        </div>
+    <?php endif; ?>
+    <?php endif; ?>
     <div class="form-group">
         <label for="post-title">Заголовок *</label>
-        <input type="text" class="form-control" name="post-title" id="post-title" value="<?= $params['post-title']?>">
+        <input type="text" class="form-control" name="post-title" id="post-title" value="<?= $params['post-title'] ?>">
     </div>
     <div class="form-group">
         <label for="post-cutcontent">Анонс</label>
-        <textarea name="post-cutcontent" id="post-cutcontent" cols="30" rows="3" class="form-control"><?= $params['post-cutcontent']?></textarea>
+        <textarea name="post-cutcontent" id="post-cutcontent" cols="30" rows="3"
+                  class="form-control"><?= $params['post-cutcontent'] ?></textarea>
     </div>
     <div class="form-group">
         <label for="post-content">Полный текст *</label>
-        <textarea name="post-content" id="post-content" cols="30" rows="5" class="form-control"><?= $params['post-content']?></textarea>
+        <textarea name="post-content" id="post-content" cols="30" rows="5"
+                  class="form-control"><?= $params['post-content'] ?></textarea>
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-success" id="submit-form">Добавить</button>

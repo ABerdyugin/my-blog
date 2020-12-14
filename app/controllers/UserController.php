@@ -122,5 +122,10 @@ class UserController extends Controller
 		}
 	}
 
+    public static function isAdminNow()
+    {
+        return $_SESSION['isAdmin'];
+	}
+
 
 }
