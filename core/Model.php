@@ -2,6 +2,7 @@
 
 namespace core;
 
+use mysql_xdevapi\Exception;
 use PDO;
 use PDOException;
 
@@ -30,6 +31,7 @@ class Model
         $dbh = null;
         try {
             $dbh = new PDO($dsn, $user, $password, $options);
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             echo 'Подключение не удалось: ' . $e->getMessage();
         }
@@ -46,7 +48,6 @@ class Model
     {
         $query = "SELECT * FROM `{$model}` WHERE 1 {$where} {$this->sort} {$limit}";
         $sth = $this->link->query($query);
-
         if ($sth) {
             return $sth->fetchAll(PDO::FETCH_ASSOC);
         }
@@ -72,14 +73,14 @@ class Model
     /**
      * @param $model
      * @param string $where
-     * @param string $limit
      * @return int
      */
-    public function getCount($model, $where = '', $limit = '')
+    public function getCount($model, $where = '')
     {
-        $query = "SELECT * FROM `{$model}` WHERE 1 {$where} {$limit}";
+        $query = "SELECT COUNT(*) as `count` FROM `{$model}` WHERE 1 {$where}";
         $sth = $this->link->query($query);
-        return $sth->rowCount();
+        $result = $sth->fetch(PDO::FETCH_ASSOC);
+        return $result['count'];
     }
 
     /**
@@ -101,8 +102,12 @@ class Model
      */
     public function delete($model, $id)
     {
-        $query = "DELETE FROM `{$model}` WHERE `id`='{$id}'";
-        return $this->link->exec($query);
+        try{
+            $query = "DELETE FROM `{$model}` WHERE `id`='{$id}'";
+            return $this->link->exec($query);
+        }catch (PDOException $e){
+            return false;
+        }
     }
 
     public function sortByField($field, $direction = 'ASC')
@@ -131,6 +136,7 @@ class Model
      * @param string $model
      * @param int $id
      * @param array $data
+     * @return bool
      */
     public function update($model, $id, $data)
     {
@@ -140,7 +146,8 @@ class Model
         }
         $dataString = implode(", ", $dataArray);
         $query = "UPDATE $model SET {$dataString} WHERE `id`='$id'";
-        $this->link->prepare($query)->execute();
+        $sth = $this->link->prepare($query);
+        return $sth->execute();
     }
 
 }

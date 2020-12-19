@@ -11,6 +11,7 @@ class Blog extends Model
     protected $modelName = "blog";
     protected $sort = '';
 
+
     public function getData($model, $where = '', $limit = '')
     {
         $this->sort = 'ORDER BY `dateadd` DESC';

@@ -18,6 +18,10 @@ use core\View;
     <link rel="stylesheet" href="/css/bootstrap-flatly.min.css?_=1" type="text/css"/>
     <link rel="stylesheet" href="/css/style.css" type="text/css"/>
     <!-- / link.html end -->
+    <!-- production version, optimized for size and speed -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <!-- axios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -48,6 +52,7 @@ use core\View;
 <!-- footer.html start -->
 <script src="/js/jquery.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
 <!-- / footer.html end -->
 </body>
 </html>
