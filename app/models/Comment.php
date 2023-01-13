@@ -11,7 +11,7 @@ class Comment extends Model
 {
     protected $modelName = 'blog_comments';
 
-    protected $sort = ' ORDER BY `dateadd` ASC ';
+    protected $sort = ' ORDER BY `date_add` ASC ';
 
     public function __construct()
     {
@@ -42,7 +42,7 @@ class Comment extends Model
         $query = "SELECT `bc`.`id`,`bc`.`content`,`u`.`login`,`u`.`id` as `user_id` FROM `blog_comments` AS `bc`  
             LEFT JOIN `users` AS `u` ON (`bc`.`user_id`=`u`.`id`)
             WHERE `bc`.`blog_id`='$postId' 
-            ORDER BY `bc`.`dateadd` ASC";
+            ORDER BY `bc`.`date_add` ASC";
         $sth = $this->link->query($query);
         $result = array();
 

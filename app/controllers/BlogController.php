@@ -72,8 +72,8 @@ class BlogController extends Controller
         $params = array(
             'item-link' => '/blog/' . $entry['id'],
             'item-title' => $entry['title'],
-            'item-cut-content' => $entry['cutcontent'],
-            'item-created' => $this->formatCreatedDate($entry['dateadd']),
+            'item-cut-content' => $entry['cut_content'],
+            'item-created' => $this->formatCreatedDate($entry['date_add']),
             'item-author' => $this->user->getName($entry['user_id']),
             'item-views' => $this->pluralViews($entry['views']),
             'item-comments' => $this->pluralComments($this->comments->getCountForPost($entry['id'])),
@@ -98,12 +98,12 @@ class BlogController extends Controller
             'post-id' => $post['id'],
             'post-poster' => $post['poster'],
             'post-title' => $post['title'],
-            'post-cut-content' => $post['cutcontent'],
+            'post-cut-content' => $post['cut_content'],
             'post-content' => $post['content'],
             'post-author' => $this->user->getName($post['user_id']),
             'post-comments' => $this->pluralComments($this->comments->getCountForPost($post['id'])),
             'post-views' => $this->pluralViews($post['views']),
-            'post-created' => $this->formatCreatedDate($post['dateadd']),
+            'post-created' => $this->formatCreatedDate($post['date_add']),
             'post-comment-list' => $this->getCommentList($post['id'])
         );
         if($error !== null){
@@ -183,7 +183,7 @@ class BlogController extends Controller
                     'post-id' => $post['id'],
                     'post-title' => $post['title'],
                     'post-poster' => $post['poster'],
-                    'post-cutcontent' => $post['cutcontent'],
+                    'post-cut_content' => $post['cut_content'],
                     'post-content' => $post['content'],
                 ), $params);
                 $params['page-content'] = $this->view->buildPartial("form", $params);
@@ -245,7 +245,7 @@ class BlogController extends Controller
     {
         $params = array_merge(array(
             'post-title' => $data['title'],
-            'post-cutcontent' => $data['cutcontent'],
+            'post-cut_content' => $data['cut_content'],
             'post-content' => $data['content'],
             'error' => true,
             'error-text' => $errorString
@@ -340,13 +340,13 @@ class BlogController extends Controller
     {
         $data = array(
             "title" => filter_input(INPUT_POST, "post-title", FILTER_SANITIZE_STRING),
-            "cutcontent" => htmlspecialchars_decode(filter_input(INPUT_POST, "post-cutcontent", FILTER_SANITIZE_SPECIAL_CHARS)),
+            "cut_content" => htmlspecialchars_decode(filter_input(INPUT_POST, "post-cut_content", FILTER_SANITIZE_SPECIAL_CHARS)),
             "content" => htmlspecialchars_decode(filter_input(INPUT_POST, "post-content", FILTER_SANITIZE_SPECIAL_CHARS)),
         );
         if ($_POST['act'] == "insert") {
             $data["poster"] = "";
             $data["user_id"] = $_SESSION['user_id'];
-            $data["dateadd"] = date("Y-m-d H:i:s");
+            $data["date_add"] = date("Y-m-d H:i:s");
         }
         return $data;
     }
@@ -361,7 +361,7 @@ class BlogController extends Controller
         if ((int)strlen(trim($data['title'])) < 1 || (int)strlen(trim($data['content'])) < 1) {
             $params = array_merge(array(
                 'post-title' => $data['title'],
-                'post-cutcontent' => $data['cutcontent'],
+                'post-cut_content' => $data['cut_content'],
                 'post-content' => $data['content'],
             ), $params);
             return false;

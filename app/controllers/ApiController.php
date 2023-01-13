@@ -54,7 +54,7 @@ class ApiController extends Controller
                 'blog_id' => $postId,
                 'content' => filter_input(INPUT_POST, 'comment-content', FILTER_SANITIZE_STRING),
                 'user_id' => $_SESSION['user_id'],
-                'dateadd' => date("Y-m-d H:i:s")
+                'date_add' => date("Y-m-d H:i:s")
             ));
         }
         return $this->listComment($postId);

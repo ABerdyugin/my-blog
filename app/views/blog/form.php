@@ -40,9 +40,9 @@ use app\controllers\BlogController as BC;
     <input type="text" class="form-control" name="post-title" id="post-title" value="<?= $params['post-title'] ?>">
   </div>
   <div class="form-group">
-    <label for="post-cutcontent">Анонс</label>
-    <textarea name="post-cutcontent" id="post-cutcontent" cols="30" rows="3"
-              class="form-control"><?= $params['post-cutcontent'] ?></textarea>
+    <label for="post-cut_content">Анонс</label>
+    <textarea name="post-cut_content" id="post-cut_content" cols="30" rows="3"
+              class="form-control"><?= $params['post-cut_content'] ?></textarea>
   </div>
   <div class="form-group">
     <label for="post-content">Полный текст *</label>

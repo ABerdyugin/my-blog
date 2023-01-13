@@ -14,7 +14,7 @@ class Blog extends Model
 
     public function getData($model, $where = '', $limit = '')
     {
-        $this->sort = 'ORDER BY `dateadd` DESC';
+        $this->sort = 'ORDER BY `date_add` DESC';
         return parent::getData($model, $where, $limit);
     }
 

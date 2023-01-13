@@ -19,6 +19,6 @@ class Search extends Blog
 
     public function buildWhere($s)
     {
-        return $where = " AND (`cutcontent` LIKE '%$s%' OR `content` LIKE '%$s%') ";
+        return $where = " AND (`cut_content` LIKE '%$s%' OR `content` LIKE '%$s%') ";
     }
 }

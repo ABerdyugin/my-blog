@@ -15,7 +15,7 @@ class Model
     private $host = 'localhost';
     private $database = 'bench';
     private $user = 'root';
-    private $password = 'mysql';
+    private $password = '';
 
     protected $sort = ' ';
 
